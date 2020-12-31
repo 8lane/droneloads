@@ -39,6 +39,8 @@ export default function Home({ videos }) {
       <main>
         <Header back={false} />
 
+        <h2 className='text-center font-normal text-coolGray-300 text-2xl mb-10'>HD drone videos. Free to download. No attribution needed.</h2>
+
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-4">
           {videos.map((video, idx) => {
             return (
@@ -94,7 +96,7 @@ export default function Home({ videos }) {
         </a>
       </footer> */}
 
-    </div >
+    </div>
   )
 }
 

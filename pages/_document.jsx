@@ -9,7 +9,10 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en" className="text-coolGray-200 leading-tight">
-        <Head />
+        <Head>
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&amp;display=swap" rel="stylesheet" />
+        </Head>
         <body className="min-h-screen bg-coolGray-900">
           <Main />
           <NextScript />

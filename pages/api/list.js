@@ -30,9 +30,9 @@ export const list = async () => {
         contentType: file.metadata.contentType,
         size: file.metadata.size,
         mediaLink: file.metadata.mediaLink,
-        timeCreated: file.metadata.timeCreated,
+        timeCreated: file.metadata.customTime ?? file.metadata.timeCreated,
         updated: file.metadata.updated,
-        location: file.metadata.metadata?.location ?? null
+        location: file.metadata.metadata?.location ?? 'Unknown'
       }
     }).filter((file => file.contentType === 'video/mp4'))
 
