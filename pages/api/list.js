@@ -1,30 +1,27 @@
+const nconf = require('nconf');
 const { Storage } = require('@google-cloud/storage');
 
-const storage = new Storage({ keyFilename: "key.json" });
+nconf.argv().env()
 
-async function listBuckets() {
-  const [buckets] = await storage.getBuckets();
-  console.log('Buckets:');
-  buckets.forEach(bucket => {
-    console.log(bucket.name);
-  });
+if (nconf.get('NODE_ENV') === 'development') {
+  nconf.file({ file: `./config/env/development.json` })
 }
 
-async function listFiles(bucketName = 'droneloads') {
-  // Lists files in the bucket
-
-  files.forEach(file => {
-    console.log(file.name);
-  });
-}
+const env = nconf.get()
 
 export const list = async () => {
-  const bucketName = 'droneloads'
-
-  const storage = new Storage({ keyFilename: "key.json" });
+  const storage = new Storage({
+    credentials: {
+      project_id: env.GOOGLE_CLOUD_STORAGE_PROJECT_ID,
+      private_key_id: env.GOOGLE_CLOUD_STORAGE_PRIVATE_KEY_ID,
+      private_key: env.GOOGLE_CLOUD_STORAGE_PRIVATE_KEY,
+      client_email: env.GOOGLE_CLOUD_STORAGE_EMAIL,
+      client_id: env.GOOGLE_CLOUD_STORAGE_ID,
+    }
+  });
 
   try {
-    const [files] = await storage.bucket(bucketName).getFiles({
+    const [files] = await storage.bucket(env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME).getFiles({
       directory: 'videos/'
     });
 
@@ -49,29 +46,5 @@ export const list = async () => {
 }
 
 export default async (req, res) => {
-  const bucketName = 'droneloads'
-
-  try {
-    const [files] = await storage.bucket(bucketName).getFiles({
-      directory: 'videos/'
-    });
-
-    const output = files.map((file) => {
-      return {
-        id: file.id,
-        name: file.name,
-        contentType: file.metadata.contentType,
-        size: file.metadata.size,
-        mediaLink: file.metadata.mediaLink,
-        timeCreated: file.metadata.timeCreated,
-        updated: file.metadata.updated,
-        location: file.metadata.metadata?.location ?? null
-      }
-    }).filter((file => file.contentType === 'video/mp4'))
-
-    res.status(200).json(output)
-  } catch (error) {
-    console.error(error)
-  }
-
+  res.status(200).json({})
 }
