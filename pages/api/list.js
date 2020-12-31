@@ -7,6 +7,8 @@ nconf.file({ file: `./config/env/${nconf.get('NODE_ENV')}.json` })
 
 const env = nconf.get()
 
+console.log('BUCKET NAME', env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME);
+
 export const list = async () => {
   const storage = new Storage({
     credentials: {
