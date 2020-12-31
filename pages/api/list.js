@@ -15,7 +15,7 @@ export const list = async () => {
     credentials: {
       project_id: env.GOOGLE_CLOUD_STORAGE_PROJECT_ID,
       private_key_id: env.GOOGLE_CLOUD_STORAGE_PRIVATE_KEY_ID,
-      private_key: env.GOOGLE_CLOUD_STORAGE_PRIVATE_KEY,
+      private_key: `${env.GOOGLE_CLOUD_STORAGE_PRIVATE_KEY}`,
       client_email: env.GOOGLE_CLOUD_STORAGE_EMAIL,
       client_id: env.GOOGLE_CLOUD_STORAGE_ID,
     }
