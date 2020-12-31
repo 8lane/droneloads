@@ -3,9 +3,7 @@ const { Storage } = require('@google-cloud/storage');
 
 nconf.argv().env()
 
-if (nconf.get('NODE_ENV') === 'development') {
-  nconf.file({ file: `./config/env/development.json` })
-}
+nconf.file({ file: `./config/env/${nconf.get('NODE_ENV')}.json` })
 
 const env = nconf.get()
 
