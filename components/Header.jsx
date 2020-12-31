@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Header({ back = true }) {
   return (
     <header>
-      <h1 className="text-4xl flex justify-center my-6 relative">
+      <h1 className="text-4xl flex justify-center my-9 relative">
         {back &&
           <Link href={`/`}>
             <a

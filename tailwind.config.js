@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: ['./pages/**/*.js', './components/**/*.js'],
+  purge: ['./pages/**/*.jsx', './components/**/*.jsx'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -11,20 +11,12 @@ module.exports = {
         }
       }
     },
-    spacing: {
-      '0': '0px',
-      '1': '8px',
-      '2': '12px',
-      '3': '16px',
-      '4': '24px',
-      '5': '32px',
-      '6': '48px',
-    },
     container: {
       center: true
     }
   },
   variants: {
+    zIndex: ['responsive', 'hover'],
     extend: {},
   },
   plugins: [],

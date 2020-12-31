@@ -49,7 +49,7 @@ export default function Home({ videos }) {
                 className='shadow-2xl'
               >
                 <Link href={`/video/${video.name}`}>
-                  <a className='link relative block w-full hover:shadow-xl md:transform md:transition md:duration-200 md:hover:scale-110 md:focus:scale-110'>
+                  <a className='link relative block w-full hover:shadow-xl md:transform md:transition md:duration-200 md:hover:scale-110 md:hover:z-30 md:focus:scale-110'>
                     <Image
                       src={`/images/thumbnails/${video.name}.jpg`}
                       alt={video.name}
