@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, createRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import { NextSeo } from 'next-seo'
+import VisibilitySensor from 'react-visibility-sensor'
 
 import Header from '../components/Header'
 import { list } from './api/list'
@@ -9,6 +11,7 @@ import { list } from './api/list'
 export default function Home({ videos }) {
   const [activePreview, setActivePreview] = useState(null)
   const videoRefs = useRef(videos.map(() => createRef()))
+  const [videosLoaded, setLoadedVideos] = useState({})
 
   const handleMouseOver = (idx) => {
     setActivePreview(idx)
@@ -32,10 +35,24 @@ export default function Home({ videos }) {
   return (
     <div className="container px-4 pb-4 md:px-0">
       <Head>
-        <title>Droneloads</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <NextSeo
+        title="Droneloads – Free drone videos"
+        description="HD drone videos. Free to download. No attribution needed."
+        canonical="https://www.canonical.ie/"
+        openGraph={{
+          url: 'https://droneloads.com',
+          title: 'Droneloads – Free drone videos',
+          description: 'HD drone videos. Free to download. No attribution needed.',
+          site_name: 'Droneloads',
+        }}
+        twitter={{
+          handle: '@tomchristian91',
+          site: 'https://droneloads.com',
+          cardType: 'summary_large_image',
+        }}
+      />
       <main>
         <Header back={false} />
 
@@ -52,25 +69,28 @@ export default function Home({ videos }) {
               >
                 <Link href={`/video/${video.name}`}>
                   <a className='link relative block w-full hover:shadow-xl md:transform md:transition md:duration-200 md:hover:scale-110 md:hover:z-30 md:focus:scale-110'>
-                    <Image
-                      src={`/images/thumbnails/${video.name}.jpg`}
-                      alt={video.name}
-                      className='z-10'
-                      layout='fill'
-                      objectFit='cover'
-                    />
                     <div className='absolute z-0 inset-0 bg-coolGray-800 animate-pulse' />
-                    <video
-                      muted
-                      ref={videoRefs.current[idx]}
-                      className='absolute z-20 top-0 left-0 h-full'
-                      width="250"
-                      preload='metadata'
-                      width='100%'
+                    <VisibilitySensor
+                      onChange={(isVisible) => {
+                        const alreadyLoaded = videosLoaded.hasOwnProperty(idx)
+                        if (!alreadyLoaded) {
+                          videoRefs.current[idx].current.load()
+                        }
+                      }}
                     >
-                      <source src={video.mediaLink} />
+                      <video
+                        muted
+                        ref={videoRefs.current[idx]}
+                        onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
+                        className='absolute z-20 top-0 left-0 h-full'
+                        width="250"
+                        preload='none'
+                        width='100%'
+                      >
+                        <source src={video.mediaLink} />
                       Sorry, your browser doesn't support embedded videos.
                     </video>
+                    </VisibilitySensor>
                   </a>
                 </Link>
               </li>
@@ -96,7 +116,7 @@ export default function Home({ videos }) {
         </a>
       </footer> */}
 
-    </div>
+    </div >
   )
 }
 

@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import { NextSeo } from 'next-seo'
 import QRCode from 'qrcode'
 import nconf from 'nconf'
 import smoothscroll from 'smoothscroll-polyfill'
@@ -43,6 +45,33 @@ export default function Video({ video, donate }) {
 
   return (
     <div className="container">
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <NextSeo
+        title={`${video.location} – Droneloads – Free drone videos`}
+        description="HD drone videos. Free to download. No attribution needed."
+        canonical={`https://droneloads.com/${video.name}`}
+        openGraph={{
+          url: 'https://droneloads.com',
+          title: 'Droneloads – Free drone videos',
+          description: 'HD drone videos. Free to download. No attribution needed.',
+          videos: [
+            {
+              url: video.mediaLink,
+              width: meta.width,
+              height: meta.height,
+              alt: `Filmed in ${meta.location} on ${meta.date} ${hasDimensions && `at ${meta.width} x ${meta.height} resolution`}`,
+            }
+          ],
+          site_name: 'Droneloads',
+        }}
+        twitter={{
+          handle: '@tomchristian91',
+          site: 'https://droneloads.com',
+          cardType: 'summary_large_image',
+        }}
+      />
       <Header />
 
       <div className='flex justify-center'>
@@ -54,7 +83,7 @@ export default function Video({ video, donate }) {
 
           <div className='mt-5 mb-8'>
             <h2 className='text-center font-normal text-coolGray-300 text-2xl mb-10'>
-              Filmed in {meta.location} on {meta.date} {hasDimensions && `at ${meta.width}x${meta.height}`}
+              Filmed in {meta.location} on {meta.date} {hasDimensions && `at ${meta.width} x ${meta.height} resolution`}
             </h2>
           </div>
         </div>

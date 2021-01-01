@@ -26,7 +26,7 @@ export const list = async () => {
     const output = files.map((file) => {
       return {
         id: file.id,
-        name: file.metadata.metadata?.name,
+        name: file.metadata.metadata?.name ?? '',
         contentType: file.metadata.contentType,
         size: file.metadata.size,
         mediaLink: file.metadata.mediaLink,
@@ -34,7 +34,7 @@ export const list = async () => {
         updated: file.metadata.updated,
         location: file.metadata.metadata?.location ?? 'Unknown'
       }
-    }).filter((file => file.contentType === 'video/mp4'))
+    }).filter((file => file.contentType.includes('video')))
 
     return output
   } catch (error) {
