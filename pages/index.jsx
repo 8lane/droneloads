@@ -71,7 +71,7 @@ export default function Home({ videos }) {
                       videoRef={videoRefs.current[idx]}
                       loaded={!!videosLoaded[idx]}
                       onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
-                      onVisibleInViewport={videoRefs.current[idx].current.load()}
+                      onVisibleInViewport={() => videoRefs.current[idx].current.load()}
                     />
                   </a>
                 </Link>
