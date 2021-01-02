@@ -66,18 +66,13 @@ export default function Home({ videos }) {
                 <Link href={`/video/${video.name}`}>
                   <a className='link relative block w-full hover:shadow-xl md:transform md:transition md:duration-200 md:hover:scale-110 md:hover:z-30 md:focus:scale-110'>
                     <div className='absolute z-0 inset-0 bg-coolGray-800 animate-pulse' />
-
                     <Video
                       video={video}
                       videoRef={videoRefs.current[idx]}
                       loaded={!!videosLoaded[idx]}
                       onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
-                      onVisibleInViewport={() => {
-                        console.log('LOAD', videoRefs);
-                        videoRefs.current[idx].current.load()
-                      }}
+                      onVisibleInViewport={videoRefs.current[idx].current.load()}
                     />
-
                   </a>
                 </Link>
               </li>

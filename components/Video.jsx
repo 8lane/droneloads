@@ -6,8 +6,6 @@ import useDownloadPath from '../hooks/useDownloadPath'
 export default function Video({ video, loaded, videoRef, onLoadedData, onVisibleInViewport }) {
   const videoPath = useDownloadPath(video.fileName)
 
-  console.log(videoPath);
-
   if (!videoPath) return null
 
   return (
