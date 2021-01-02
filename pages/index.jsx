@@ -33,7 +33,7 @@ export default function Home({ videos }) {
   }, [activePreview])
 
   return (
-    <div className="container px-4 pb-4 md:px-0">
+    <div className="container px-4 pb-4">
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -56,7 +56,7 @@ export default function Home({ videos }) {
       <main>
         <Header back={false} />
 
-        <h2 className='text-center font-normal text-coolGray-300 text-2xl mb-10'>HD drone videos. Free to download. No attribution needed.</h2>
+        <h2 className='text-center font-normal text-coolGray-300 text-lg md:text-2xl mb-8 md:mb-10'>HD drone videos. Free to download. No attribution needed.</h2>
 
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-4">
           {videos.map((video, idx) => {
@@ -71,25 +71,24 @@ export default function Home({ videos }) {
                   <a className='link relative block w-full hover:shadow-xl md:transform md:transition md:duration-200 md:hover:scale-110 md:hover:z-30 md:focus:scale-110'>
                     <div className='absolute z-0 inset-0 bg-coolGray-800 animate-pulse' />
                     <VisibilitySensor
-                      onChange={(isVisible) => {
-                        const alreadyLoaded = videosLoaded.hasOwnProperty(idx)
-                        if (!alreadyLoaded) {
-                          videoRefs.current[idx].current.load()
-                        }
-                      }}
+                      active={videosLoaded[idx] !== true}
+                      onChange={() => videoRefs.current[idx].current.load()}
                     >
-                      <video
-                        muted
-                        ref={videoRefs.current[idx]}
-                        onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
-                        className='absolute z-20 top-0 left-0 h-full'
-                        width="250"
-                        preload='none'
-                        width='100%'
-                      >
-                        <source src={video.mediaLink} />
-                      Sorry, your browser doesn't support embedded videos.
-                    </video>
+                      {() =>
+                        <video
+                          muted
+                          ref={videoRefs.current[idx]}
+                          onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
+                          className='absolute z-20 top-0 left-0 h-full'
+                          width="250"
+                          preload='none'
+                          width='100%'
+                          title={`${video.location}`}
+                        >
+                          <source src={video.mediaLink} />
+                          Sorry, your browser doesn't support embedded videos.
+                        </video>
+                      }
                     </VisibilitySensor>
                   </a>
                 </Link>
@@ -104,18 +103,6 @@ export default function Home({ videos }) {
           padding-top: 56.33%;
         }
       `}</style>
-
-      {/* <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer> */}
-
     </div >
   )
 }

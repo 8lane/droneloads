@@ -44,7 +44,7 @@ export default function Video({ video, donate }) {
   const hasDimensions = meta.width && meta.height
 
   return (
-    <div className="container">
+    <div className="container px-4 pb-4">
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -75,13 +75,20 @@ export default function Video({ video, donate }) {
       <Header />
 
       <div className='flex justify-center'>
-        <div className='max-w-3xl'>
-          <video onLoadedMetadata={handleMetadata} controls className='shadow-2xl' width="250" preload='metadata' width='100%'>
+        <div className='px-3 md:px-0 md:w-10/12'>
+          <video
+            onLoadedMetadata={handleMetadata}
+            controls
+            className='shadow-2xl'
+            preload='metadata'
+            width='100%'
+            height='100%'
+          >
             <source src={video.mediaLink} />
               Sorry, your browser doesn't support embedded videos.
             </video>
 
-          <div className='mt-5 mb-8'>
+          <div className='mt-5 mb-8 md:mt-8'>
             <h2 className='text-center font-normal text-coolGray-300 text-2xl mb-10'>
               Filmed in {meta.location} on {meta.date} {hasDimensions && `at ${meta.width} x ${meta.height} resolution`}
             </h2>
@@ -90,34 +97,22 @@ export default function Video({ video, donate }) {
       </div>
 
       <div className='max-w-md mx-auto px-4'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 text-center'>
-          <div>
-            <Link href={video.mediaLink}>
-              <a className='inline-flex w-full h-15 justify-center items-center px-6 py-3 text-white transition-colors duration-150 bg-green-default rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset focus:ring-opacity-90 hover:bg-green-light border border-transparent'>
-                <span className='block mr-3'>Download free</span>
-                <Image
-                  src={`/images/download.svg`}
-                  alt=''
-                  height='26'
-                  width='28'
-                />
-              </a>
-            </Link>
-          </div>
-          <div>
+        <div className='flex justify-center text-center'>
+          <div className='w-lg'>
+            {/* <Link href={video.mediaLink}> */}
             <button
-              type='button'
+              className='inline-flex w-full h-15 justify-center items-center px-6 py-3 text-white transition-colors duration-150 bg-green-default rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset focus:ring-opacity-90 hover:bg-green-light border border-transparent'
               onClick={() => setDonateActive(!donateActive)}
-              className='inline-flex w-full h-15 justify-center items-center font-normal px-6 py-3 text-indigo-100 transition-colors duration-150 bg-transparent border border-coolGray-800 hover:border-coolGray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
             >
-              <span className='block mr-3'>Donate</span>
+              <span className='block mr-3'>Download free</span>
               <Image
-                src={`/images/bitcoin.svg`}
+                src={`/images/download.svg`}
                 alt=''
-                height='28'
+                height='26'
                 width='28'
               />
             </button>
+            {/* </Link> */}
           </div>
         </div>
 
@@ -125,6 +120,8 @@ export default function Video({ video, donate }) {
           ref={donateRef}
           className={`block text-center justify-center mt-8 mb-10 transition duration-400 ease-in transform-gpu ${donateActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
         >
+          <small className='block text-sm py-2 text-coolGray-500'>The download will begin shortly...</small>
+          <h2 className='block text-xl pt-5 mb-3'>Want to support my work?</h2>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
             <div
               className='w-full p-2 text-center bg-transparent border border-coolGray-800 rounded-md'
