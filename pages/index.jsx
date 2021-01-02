@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import { list } from './api/list'
+import { getVideos } from './api/getVideos'
 
 export default function Home({ videos }) {
   const [activePreview, setActivePreview] = useState(null)
@@ -112,17 +112,11 @@ export default function Home({ videos }) {
 }
 
 export async function getStaticProps(context) {
-  const videos = await list()
-
-  // if (!media) {
-  //   return {
-  //     media,
-  //   }
-  // }
+  const videos = await getVideos()
 
   return {
     props: {
       videos
-    }, // will be passed to the page component as props
+    }
   }
 }

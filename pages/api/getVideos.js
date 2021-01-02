@@ -7,7 +7,7 @@ nconf.file({ file: `./config/env/${nconf.get('NODE_ENV')}.json` })
 
 const env = nconf.get()
 
-export const list = async () => {
+export const getVideos = async () => {
   const storage = new Storage({
     credentials: {
       project_id: env.GOOGLE_CLOUD_STORAGE_PROJECT_ID,

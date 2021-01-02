@@ -3,11 +3,10 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { NextSeo } from 'next-seo'
-import QRCode from 'qrcode'
-import nconf from 'nconf'
 import smoothscroll from 'smoothscroll-polyfill'
 
-import { list } from '../api/list'
+import { getVideos } from '../api/getVideos'
+import { getCryptoWallet } from '../api/getCryptoWallet'
 
 export default function Video({ video, donate }) {
   const date = new Date(video.timeCreated)
@@ -161,7 +160,7 @@ export default function Video({ video, donate }) {
 }
 
 export async function getStaticPaths() {
-  const videos = await list()
+  const videos = await getVideos()
 
   const paths = videos.map((video) => ({
     params: { name: video.name },
@@ -171,29 +170,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const videos = await list()
-
-  const generateQR = async text => {
-    try {
-      return await QRCode.toDataURL(text, {
-        margin: 2,
-        width: 300,
-        color: {
-          dark: '#FFF',  // Blue dots
-          light: '#0A0B11' // Transparent background
-        }
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const donate = {
-    bitcoinWallet: nconf.get('BITCOIN_ADDRESS'),
-    bitcoinQRCode: await generateQR(nconf.get('BITCOIN_ADDRESS')),
-    ethWallet: nconf.get('ETH_ADDRESS'),
-    ethQRCode: await generateQR(nconf.get('ETH_ADDRESS'))
-  }
+  const videos = await getVideos()
+  const donate = await getCryptoWallet()
 
   const video = videos.find((video) => video.name === params.name)
 
