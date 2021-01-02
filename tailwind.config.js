@@ -14,6 +14,20 @@ module.exports = {
           ...colors.coolGray,
           900: '#0A0B11'
         }
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        fadeInDown: {
+          '0%': { opacity: 0, transform: 'translateY(-10px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        }
+      },
+      animation: {
+        fadeIn: 'fadeIn 300ms ease-in',
+        fadeInDown: 'fadeInDown 300ms ease-in'
       }
     },
     fontFamily: {

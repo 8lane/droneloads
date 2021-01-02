@@ -7,8 +7,6 @@ import QRCode from 'qrcode'
 import nconf from 'nconf'
 import smoothscroll from 'smoothscroll-polyfill'
 
-import Header from '../../components/Header'
-
 import { list } from '../api/list'
 
 export default function Video({ video, donate }) {
@@ -44,7 +42,7 @@ export default function Video({ video, donate }) {
   const hasDimensions = meta.width && meta.height
 
   return (
-    <div className="container px-4 pb-4">
+    <div className="container px-4 pb-4 motion-safe:animate-fadeIn">
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -72,7 +70,6 @@ export default function Video({ video, donate }) {
           cardType: 'summary_large_image',
         }}
       />
-      <Header />
 
       <div className='flex justify-center'>
         <div className='px-3 md:px-0 md:w-10/12'>

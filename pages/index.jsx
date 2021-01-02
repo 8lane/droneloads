@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef, createRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import VisibilitySensor from 'react-visibility-sensor'
 
-import Header from '../components/Header'
 import { list } from './api/list'
 
 export default function Home({ videos }) {
@@ -33,7 +31,7 @@ export default function Home({ videos }) {
   }, [activePreview])
 
   return (
-    <div className="container px-4 pb-4">
+    <div className="container px-4 pb-4 motion-safe:animate-fadeIn">
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -54,8 +52,6 @@ export default function Home({ videos }) {
         }}
       />
       <main>
-        <Header back={false} />
-
         <h2 className='text-center font-normal text-coolGray-300 text-lg md:text-2xl mb-8 md:mb-10'>HD drone videos. Free to download. No attribution needed.</h2>
 
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-4">
@@ -101,6 +97,14 @@ export default function Home({ videos }) {
       <style jsx>{`
         .link {
           padding-top: 56.33%;
+        }
+        ::selection {
+          background: #000; /* WebKit/Blink Browsers */
+          color: white;
+        }
+        ::-moz-selection {
+          background: #000; /* Gecko Browsers */
+          color: white;
         }
       `}</style>
     </div >
