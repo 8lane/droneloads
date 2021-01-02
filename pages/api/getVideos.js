@@ -26,10 +26,10 @@ export const getVideos = async () => {
     const output = files.map((file) => {
       return {
         id: file.id,
+        fileName: file.name,
         name: file.metadata.metadata?.name ?? '',
         contentType: file.metadata.contentType,
         size: file.metadata.size,
-        mediaLink: file.metadata.mediaLink,
         timeCreated: file.metadata.customTime ?? file.metadata.timeCreated,
         updated: file.metadata.updated,
         location: file.metadata.metadata?.location ?? 'Unknown'

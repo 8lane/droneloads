@@ -5,10 +5,13 @@ import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import smoothscroll from 'smoothscroll-polyfill'
 
+import useDownloadPath from '../../hooks/useDownloadPath'
 import { getVideos } from '../api/getVideos'
 import { getCryptoWallet } from '../api/getCryptoWallet'
 
 export default function Video({ video, donate }) {
+  const videoPath = useDownloadPath(video.fileName)
+
   const date = new Date(video.timeCreated)
 
   const [meta, setMeta] = useState({
@@ -30,6 +33,14 @@ export default function Video({ video, donate }) {
       donateRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [donateActive])
+
+  const handleDownload = () => {
+    setDonateActive(!donateActive)
+
+    setTimeout(() => {
+      location.href = videoPath
+    }, 1500);
+  }
 
   const handleMetadata = (evt) =>
     setMeta((current) => ({
@@ -72,17 +83,19 @@ export default function Video({ video, donate }) {
 
       <div className='flex justify-center'>
         <div className='px-3 md:px-0 md:w-10/12'>
-          <video
-            onLoadedMetadata={handleMetadata}
-            controls
-            className='shadow-2xl'
-            preload='metadata'
-            width='100%'
-            height='100%'
-          >
-            <source src={video.mediaLink} />
+          {videoPath &&
+            <video
+              onLoadedMetadata={handleMetadata}
+              controls
+              className='shadow-2xl'
+              preload='metadata'
+              width='100%'
+              height='100%'
+            >
+              <source src={videoPath} />
               Sorry, your browser doesn't support embedded videos.
             </video>
+          }
 
           <div className='mt-5 mb-8 md:mt-8'>
             <h2 className='text-center font-normal text-coolGray-300 text-2xl mb-10'>
@@ -95,10 +108,9 @@ export default function Video({ video, donate }) {
       <div className='max-w-md mx-auto px-4'>
         <div className='flex justify-center text-center'>
           <div className='w-lg'>
-            {/* <Link href={video.mediaLink}> */}
             <button
               className='inline-flex w-full h-15 justify-center items-center px-6 py-3 text-white transition-colors duration-150 bg-green-default rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset focus:ring-opacity-90 hover:bg-green-light border border-transparent'
-              onClick={() => setDonateActive(!donateActive)}
+              onClick={handleDownload}
             >
               <span className='block mr-3'>Download free</span>
               <Image
@@ -108,7 +120,6 @@ export default function Video({ video, donate }) {
                 width='28'
               />
             </button>
-            {/* </Link> */}
           </div>
         </div>
 
@@ -116,7 +127,7 @@ export default function Video({ video, donate }) {
           ref={donateRef}
           className={`block text-center justify-center mt-8 mb-10 transition duration-400 ease-in transform-gpu ${donateActive ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
         >
-          <small className='block text-sm py-2 text-coolGray-500'>The download will begin shortly...</small>
+          <small className='block text-sm py-2 text-coolGray-500'>The download will begin shortly. <a className='transition-colors hover:text-coolGray-400 focus:text-coolGray-400 underline' href={videoPath} download={videoPath}>Manually download it here &rarr;</a></small>
           <h2 className='block text-xl pt-5 mb-3'>Want to support my work?</h2>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
             <div

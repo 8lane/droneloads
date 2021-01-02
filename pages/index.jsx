@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, createRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'
-import VisibilitySensor from 'react-visibility-sensor'
 
+import Video from '../components/Video'
 import { getVideos } from './api/getVideos'
 
 export default function Home({ videos }) {
@@ -66,26 +66,18 @@ export default function Home({ videos }) {
                 <Link href={`/video/${video.name}`}>
                   <a className='link relative block w-full hover:shadow-xl md:transform md:transition md:duration-200 md:hover:scale-110 md:hover:z-30 md:focus:scale-110'>
                     <div className='absolute z-0 inset-0 bg-coolGray-800 animate-pulse' />
-                    <VisibilitySensor
-                      active={videosLoaded[idx] !== true}
-                      onChange={() => videoRefs.current[idx].current.load()}
-                    >
-                      {() =>
-                        <video
-                          muted
-                          ref={videoRefs.current[idx]}
-                          onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
-                          className='absolute z-20 top-0 left-0 h-full'
-                          width="250"
-                          preload='none'
-                          width='100%'
-                          title={`${video.location}`}
-                        >
-                          <source src={video.mediaLink} />
-                          Sorry, your browser doesn't support embedded videos.
-                        </video>
-                      }
-                    </VisibilitySensor>
+
+                    <Video
+                      video={video}
+                      videoRef={videoRefs.current[idx]}
+                      loaded={!!videosLoaded[idx]}
+                      onLoadedData={() => setLoadedVideos((current) => ({ ...current, [idx]: true }))}
+                      onVisibleInViewport={() => {
+                        console.log('LOAD', videoRefs);
+                        videoRefs.current[idx].current.load()
+                      }}
+                    />
+
                   </a>
                 </Link>
               </li>
