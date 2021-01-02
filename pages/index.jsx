@@ -38,7 +38,7 @@ export default function Home({ videos }) {
       <NextSeo
         title="Droneloads – Free drone videos"
         description="HD drone videos. Free to download. No attribution needed."
-        canonical="https://www.canonical.ie/"
+        canonical="https://droneloads.com"
         openGraph={{
           url: 'https://droneloads.com',
           title: 'Droneloads – Free drone videos',
