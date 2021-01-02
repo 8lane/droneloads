@@ -60,6 +60,8 @@ export default function Home({ videos }) {
               <li
                 onMouseOver={() => handleMouseOver(idx)}
                 onMouseOut={handleMouseOut}
+                onTouchStart={() => handleMouseOver(idx)}
+                onTouchEnd={handleMouseOut}
                 key={video.id}
                 className='shadow-2xl'
               >
