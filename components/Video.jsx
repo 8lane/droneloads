@@ -16,6 +16,7 @@ export default function Video({ video, loaded, videoRef, onLoadedData, onVisible
       {() =>
         <video
           muted
+          playsinline
           ref={videoRef}
           onLoadedData={onLoadedData}
           className='absolute z-20 top-0 left-0 h-full'
