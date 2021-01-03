@@ -17,6 +17,16 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+        <style jsx global>{`
+        ::selection {
+          background: rgba(4, 160, 157); /* WebKit/Blink Browsers */
+          color: white;
+        }
+        ::-moz-selection {
+          background: rgba(4, 160, 157); /* Gecko Browsers */
+          color: white;
+        }
+      `}</style>
       </Html>
     )
   }

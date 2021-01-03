@@ -12,11 +12,13 @@ export default function Home({ videos }) {
   const [videosLoaded, setLoadedVideos] = useState({})
 
   const handleMouseOver = (idx) => {
-    setActivePreview(idx)
+    if (videosLoaded[idx]) {
+      setActivePreview(idx)
+    }
   }
 
   const handleMouseOut = () => {
-    if (typeof activePreview === 'number') {
+    if (typeof activePreview === 'number' && videosLoaded[activePreview]) {
       videoRefs.current[activePreview].current.pause()
       videoRefs.current[activePreview].current.currentTime = 0
     }
@@ -86,14 +88,6 @@ export default function Home({ videos }) {
       <style jsx>{`
         .link {
           padding-top: 56.33%;
-        }
-        ::selection {
-          background: #000; /* WebKit/Blink Browsers */
-          color: white;
-        }
-        ::-moz-selection {
-          background: #000; /* Gecko Browsers */
-          color: white;
         }
       `}</style>
     </div >

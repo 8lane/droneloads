@@ -13,7 +13,7 @@ export default function Header() {
           {showBack &&
             <Link href={`/`}>
               <a
-                aria-labelledBy='header-back'
+                aria-labelledby='header-back'
                 className='w-12 h-12 flex justify-center absolute -left-3 -top-4 sm:-top-2 md:transform md:transition md:hover:scale-125 md:focus:scale-125 md:duration-150 motion-safe:animate-fadeIn'
               >
                 <div className='w-6 flex items-center'>
